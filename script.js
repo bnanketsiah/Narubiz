@@ -60,46 +60,26 @@ document.addEventListener("DOMContentLoaded", (event) => {
     const contactForm = document.getElementById('contact-form');
     const formStatus = document.getElementById('form-status');
     if (contactForm) {
-        contactForm.addEventListener('submit', async (e) => {
+        contactForm.addEventListener('submit', (e) => {
             e.preventDefault();
 
-            const submitBtn = contactForm.querySelector('button[type="submit"]');
-            const originalText = submitBtn.innerText;
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const message = document.getElementById('message').value;
 
-            submitBtn.innerText = "Sending...";
-            submitBtn.disabled = true;
+            const subject = encodeURIComponent("New Message from " + name);
+            const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`);
 
-            try {
-                const response = await fetch(contactForm.action, {
-                    method: contactForm.method,
-                    body: new FormData(contactForm),
-                    headers: {
-                        'Accept': 'application/json'
-                    }
-                });
+            window.location.href = `mailto:narubizltd@gmail.com?subject=${subject}&body=${body}`;
 
-                if (response.ok) {
-                    contactForm.reset();
-                    formStatus.style.display = 'block';
-                    formStatus.style.color = 'var(--accent)';
-                    formStatus.innerText = "Thank you! Your message has been sent successfully.";
-                } else {
-                    formStatus.style.display = 'block';
-                    formStatus.style.color = '#ff4444';
-                    formStatus.innerText = "Oops! There was a problem submitting your form";
-                }
-            } catch (error) {
-                formStatus.style.display = 'block';
-                formStatus.style.color = '#ff4444';
-                formStatus.innerText = "Oops! There was a problem submitting your form";
-            } finally {
-                submitBtn.innerText = originalText;
-                submitBtn.disabled = false;
+            contactForm.reset();
+            formStatus.style.display = 'block';
+            formStatus.style.color = 'var(--accent)';
+            formStatus.innerText = "Opening your email client...";
 
-                setTimeout(() => {
-                    formStatus.style.display = 'none';
-                }, 5000);
-            }
+            setTimeout(() => {
+                formStatus.style.display = 'none';
+            }, 5000);
         });
     }
 
@@ -107,46 +87,29 @@ document.addEventListener("DOMContentLoaded", (event) => {
     const tradeForm = document.getElementById('trade-form');
     const tradeFormStatus = document.getElementById('trade-form-status');
     if (tradeForm) {
-        tradeForm.addEventListener('submit', async (e) => {
+        tradeForm.addEventListener('submit', (e) => {
             e.preventDefault();
 
-            const submitBtn = tradeForm.querySelector('button[type="submit"]');
-            const originalText = submitBtn.innerText;
+            const company = document.getElementById('company').value;
+            const contactPerson = document.getElementById('contact-person').value;
+            const email = document.getElementById('trade-email').value;
+            const country = document.getElementById('country').value;
+            const volume = document.getElementById('volume').value;
+            const message = document.getElementById('trade-message').value;
 
-            submitBtn.innerText = "Sending...";
-            submitBtn.disabled = true;
+            const subject = encodeURIComponent("Trade Enquiry from " + company);
+            const body = encodeURIComponent(`Company Name: ${company}\nContact Person: ${contactPerson}\nEmail: ${email}\nCountry: ${country}\nEstimated Volume: ${volume}\n\nMessage:\n${message}`);
 
-            try {
-                const response = await fetch(tradeForm.action, {
-                    method: tradeForm.method,
-                    body: new FormData(tradeForm),
-                    headers: {
-                        'Accept': 'application/json'
-                    }
-                });
+            window.location.href = `mailto:narubizltd@gmail.com?subject=${subject}&body=${body}`;
 
-                if (response.ok) {
-                    tradeForm.reset();
-                    tradeFormStatus.style.display = 'block';
-                    tradeFormStatus.style.color = 'var(--accent)';
-                    tradeFormStatus.innerText = "Thank you! Your trade enquiry has been submitted.";
-                } else {
-                    tradeFormStatus.style.display = 'block';
-                    tradeFormStatus.style.color = '#ff4444';
-                    tradeFormStatus.innerText = "Oops! There was a problem submitting your form.";
-                }
-            } catch (error) {
-                tradeFormStatus.style.display = 'block';
-                tradeFormStatus.style.color = '#ff4444';
-                tradeFormStatus.innerText = "Oops! There was a problem submitting your form.";
-            } finally {
-                submitBtn.innerText = originalText;
-                submitBtn.disabled = false;
+            tradeForm.reset();
+            tradeFormStatus.style.display = 'block';
+            tradeFormStatus.style.color = 'var(--accent)';
+            tradeFormStatus.innerText = "Opening your email client...";
 
-                setTimeout(() => {
-                    tradeFormStatus.style.display = 'none';
-                }, 5000);
-            }
+            setTimeout(() => {
+                tradeFormStatus.style.display = 'none';
+            }, 5000);
         });
     }
 
